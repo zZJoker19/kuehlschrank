@@ -1,1 +1,801 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kühlschrank-Bestand</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kühlschrank">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EEF2F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D1415" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACS0lEQVR42u3dwU0CURSFYXhhTQ02RQNWYajAKqzNUlzJgpC4MnPPed+3NCbMg3/ujDA45+v9doJXlqcAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTgQB+KAX5fu5X1/fP33Q7x9vpscyjjyUcSR+pq19rGUoY+N4jjqderrw18riANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAHiIMt4zjq+4l934v0vZX4xxVHxitU1odzDvaIY8KO2zQ8TA42iGPOLlszPEwO2uOYtrN2DA+Tg+o4Zu6mBcNjKUMfDitsFsf8XTN6eJgcNMaRslPmDg+Tg7o4snbH0OGxlGGbHVbYII7c87u4LTc5aIkj/Q3prO03OaiIo+MiiaBVmBzkx9F0VXfKWpZn04ocVmiMo/Xei/PXZXIQG0fxLX3nr87kIDOO7rExf43n6/3m6TvK8H8G5LCCE1KrMzlwQmp4mByIA3EgDsSBOBAHiANxIA7EgTiY5ZK76U9Xyjw+wXr8/OkzrWm/b3LgsII4EAeIA3EgDsSBOBAH4kAciANxIA4QB+JAHIgDcSAOxIE4EAfiAHEgDsSBOBAH4kAciANxIA4QB+JAHIgDcXC80Xek3uHukKfB96U2ORAH4kAciANxIA7EgTgQB+IYaez7ypus0eQgNo7u4TF8dSYHyXG0Do/561qeRyuKP6w09ZGyltFXgr0UfXlYVuJ5cYQmkjj5UuPAOQfiQByIA3EgDsQB4kAciANxIA7EgTgQB+JAHCAO/vQDZ3qcGdJz7vsAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACS0lEQVR42u3dwU0CURSFYXhhTQ02RQNWYajAKqzNUlzJgpC4MnPPed+3NCbMg3/ujDA45+v9doJXlqcAcSAOxIE4EAfiQByIA3EgDhAH4kAciANxIA7EgTgQB+KAX5fu5X1/fP33Q7x9vpscyjjyUcSR+pq19rGUoY+N4jjqderrw18riANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAHiIMt4zjq+4l934v0vZX4xxVHxitU1odzDvaIY8KO2zQ8TA42iGPOLlszPEwO2uOYtrN2DA+Tg+o4Zu6mBcNjKUMfDitsFsf8XTN6eJgcNMaRslPmDg+Tg7o4snbH0OGxlGGbHVbYII7c87u4LTc5aIkj/Q3prO03OaiIo+MiiaBVmBzkx9F0VXfKWpZn04ocVmiMo/Xei/PXZXIQG0fxLX3nr87kIDOO7rExf43n6/3m6TvK8H8G5LCCE1KrMzlwQmp4mByIA3EgDsSBOBAHiANxIA7EgTiY5ZK76U9Xyjw+wXr8/OkzrWm/b3LgsII4EAeIA3EgDsSBOBAH4kAciANxIA4QB+JAHIgDcSAOxIE4EAfiAHEgDsSBOBAH4kAciANxIA4QB+JAHIgDcXC80Xek3uHukKfB96U2ORAH4kAciANxIA7EgTgQB+IYaez7ypus0eQgNo7u4TF8dSYHyXG0Do/561qeRyuKP6w09ZGyltFXgr0UfXlYVuJ5cYQmkjj5UuPAOQfiQByIA3EgDsQB4kAciANxIA7EgTgQB+JAHCAO/vQDZ3qcGdJz7vsAAAAASUVORK5CYII=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: fridge shelf. Sticky stat header, tile grid of bottles, thumb-reach scan dock, full-screen live scanner. */
+:root{
+  --bg:#EEF2F3; --surface:#FFFFFF; --sunk:#E1E8EA; --fg:#12201E; --muted:#5A6A6C; --line:#D2DBDD;
+  --accent:#0E7A55; --accent-ink:#FFFFFF; --take:#B4361C; --take-ink:#FFFFFF;
+  --warn-bg:#FBE7D3; --warn-fg:#94450A; --shadow:0 1px 2px rgba(18,32,30,.06),0 6px 18px rgba(18,32,30,.07);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --dock-h:84px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0D1415; --surface:#162123; --sunk:#1F2C2F; --fg:#E3ECED; --muted:#93A4A6; --line:#2A393C;
+  --accent:#36C18B; --accent-ink:#052117; --take:#F07A5E; --take-ink:#2A0A03;
+  --warn-bg:#3A2413; --warn-fg:#F4B47C; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25); color-scheme:dark}}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-bottom:calc(var(--dock-h) + 24px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+[hidden]{display:none!important}
+img{max-width:100%}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 10px;display:grid;gap:12px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand h1{margin:0;font-family:var(--f-display);font-stretch:72%;font-weight:800;font-size:30px;letter-spacing:-.01em;text-transform:uppercase;line-height:1}
+.who{border:1px solid var(--line);background:var(--surface);border-radius:999px;height:32px;padding:0 12px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.dot.off{background:var(--take)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stat{background:var(--surface);padding:8px 10px;min-width:0}
+.stat b{display:block;font-family:var(--f-display);font-stretch:80%;font-weight:750;font-size:22px;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat span{font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.stat.warn b{color:var(--warn-fg)}
+.tools{display:flex;gap:8px;align-items:center}
+.search{flex:1;min-width:0;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:16px}
+.iconbtn{height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);white-space:nowrap;font-weight:600;font-size:14px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.notice{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--sunk);font-size:13.5px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.notice.bad{background:var(--warn-bg);color:var(--warn-fg)}
+.notice button{border:0;background:transparent;font-weight:700;color:var(--accent);padding:4px 0}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.tile{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.tile.empty{opacity:.55}
+.pic{aspect-ratio:4/5;max-width:100%;background:#fff;display:grid;place-items:center;border:0;padding:0;width:100%;position:relative}
+.pic.ph{background:var(--sunk)}
+.pic img{width:100%;height:100%;object-fit:contain;display:block;padding:8px}
+.pic svg{width:38%;height:auto}
+.badge{position:absolute;top:8px;left:8px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:var(--warn-bg);color:var(--warn-fg)}
+.info{padding:10px 10px 4px;min-width:0}
+.name{font-weight:700;font-size:14.5px;line-height:1.25;overflow-wrap:anywhere}
+.meta{font-size:12px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.qtyrow{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:6px 8px 10px;gap:4px}
+.qtyrow button{height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:22px;font-weight:600;line-height:1}
+.qtyrow .plus{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.qty{text-align:center;font-family:var(--f-display);font-stretch:75%;font-weight:800;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.qty small{display:block;font-family:var(--f-body);font-stretch:100%;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.emptystate{margin-top:28px;padding:28px 20px;border:1.5px dashed var(--line);border-radius:16px;text-align:center;color:var(--muted)}
+.emptystate h2{margin:0 0 6px;color:var(--fg);font-family:var(--f-display);font-stretch:80%;font-size:22px;text-wrap:balance}
+
+.log{margin-top:28px}
+.log h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700}
+.log ol{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.log li{display:grid;grid-template-columns:48px 1fr auto;gap:10px;padding:9px 12px;border-top:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.log li:first-child{border-top:0}
+.log .d{font-weight:800;font-variant-numeric:tabular-nums;font-family:var(--f-display);font-stretch:80%;font-size:16px}
+.log .d.in{color:var(--accent)} .log .d.out{color:var(--take)}
+.log .w{color:var(--muted);font-size:12px;white-space:nowrap}
+.log .n{min-width:0;overflow-wrap:anywhere}
+
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--bg);border-top:1px solid var(--line);padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dock .in{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.big{height:56px;border-radius:14px;border:0;font-family:var(--f-display);font-stretch:85%;font-weight:750;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px}
+.big svg{width:22px;height:22px}
+.big.add{background:var(--accent);color:var(--accent-ink)}
+.big.take{background:var(--take);color:var(--take-ink)}
+
+/* Scanner */
+.scan{position:fixed;inset:0;z-index:15;background:#000;color:#fff;display:grid;grid-template-rows:auto 1fr auto}
+.scan video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scan .bar{position:relative;z-index:1;display:flex;gap:10px;align-items:center;justify-content:space-between;
+  padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,0))}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.16);border-radius:12px;padding:3px;flex:1;max-width:320px}
+.seg button{height:40px;border:0;border-radius:9px;background:transparent;color:#fff;font-weight:700;font-size:15px}
+.seg button[aria-pressed="true"].a{background:#0E7A55}
+.seg button[aria-pressed="true"].t{background:#B4361C}
+.xbtn{width:44px;height:44px;border-radius:12px;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:22px;flex:none}
+.frame{position:relative;z-index:1;align-self:center;justify-self:center;width:min(78vw,340px);aspect-ratio:16/10;max-width:100%;border-radius:16px;
+  box-shadow:0 0 0 100vmax rgba(0,0,0,.38);border:2px solid rgba(255,255,255,.9)}
+.frame::after{content:"";position:absolute;left:8%;right:8%;top:50%;height:2px;background:#36C18B;box-shadow:0 0 12px #36C18B}
+@media (prefers-reduced-motion:no-preference){.frame::after{animation:sweep 1.8s ease-in-out infinite alternate}@keyframes sweep{from{top:22%}to{top:78%}}}
+.frame.hit{border-color:#36C18B}
+.scan .foot{position:relative;z-index:1;display:grid;gap:10px;padding-top:24px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.7))}
+.result{background:#fff;color:#12201E;border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;min-height:64px}
+.result img,.result .ph{width:44px;height:52px;object-fit:contain;flex:none;border-radius:8px;background:#E1E8EA}
+.result .t{flex:1;min-width:0;font-size:14px;line-height:1.3}
+.result .t b{display:block;font-size:15px;overflow-wrap:anywhere}
+.result button{border:0;background:transparent;font-weight:800;color:#0E7A55;padding:6px 0;white-space:nowrap}
+.scan .hint2{font-size:13.5px;text-align:center;color:rgba(255,255,255,.85);margin:0}
+.scan .link{border:0;background:transparent;color:#fff;text-decoration:underline;font-size:14px;padding:6px}
+.scan .err2{background:rgba(180,54,28,.92);border-radius:12px;padding:12px;font-size:14px}
+
+/* Sheets */
+.scrim{position:fixed;inset:0;z-index:20;background:rgba(5,12,12,.5);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:92%;overflow:auto;background:var(--surface);color:var(--fg);border-radius:18px 18px 0 0;
+  padding-top:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));display:grid;gap:14px}
+.sheet h3{margin:0;font-family:var(--f-display);font-stretch:80%;font-size:23px;line-height:1.15;text-wrap:balance}
+.sheet .head{display:flex;gap:12px;align-items:center}
+.sheet .thumb{width:64px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:#fff;flex:none;display:grid;place-items:center;border:1px solid var(--line)}
+.sheet .thumb img{width:100%;height:100%;object-fit:contain}
+.sheet .thumb svg{width:50%}
+.ean{font-family:var(--f-mono);font-size:13px;color:var(--muted);letter-spacing:.04em}
+label.f{display:grid;gap:5px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.inp{height:46px;border-radius:10px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font-size:16px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--fg);width:100%;min-width:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{height:36px;padding:0 12px;border-radius:9px;border:1px solid var(--line);background:var(--bg);font-size:14px;font-weight:600;color:var(--fg)}
+.opt[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.opt small{font-weight:500;opacity:.7;margin-left:4px}
+.stepper{display:grid;grid-template-columns:56px 1fr 56px;align-items:center;gap:8px}
+.stepper button{height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:26px;font-weight:600}
+.stepper output{text-align:center;font-family:var(--f-display);font-stretch:75%;font-weight:800;font-size:40px;font-variant-numeric:tabular-nums}
+.actions{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:4px}
+.btn{height:50px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:16px;color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.danger{color:var(--take);background:transparent;border-color:var(--take)}
+.btn.danger.armed{background:var(--take);color:var(--take-ink)}
+.btn:disabled{opacity:.6}
+.hint{font-size:13.5px;color:var(--muted);margin:0}
+.err{font-size:13.5px;color:var(--warn-fg);background:var(--warn-bg);border-radius:10px;padding:10px 12px;margin:0}
+.src{font-size:12px;color:var(--muted)}
+
+/* Setup */
+.setup{max-width:520px;margin:0 auto;padding-block:32px;display:grid;gap:16px}
+.setup h1{margin:0;font-family:var(--f-display);font-stretch:72%;font-weight:800;font-size:38px;text-transform:uppercase;line-height:1}
+.setup p{margin:0;color:var(--muted)}
+.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:grid;gap:12px}
+.help summary{font-weight:700;cursor:pointer;list-style-position:inside}
+.steps{margin:0;padding-left:20px;display:grid;gap:8px;font-size:14px;line-height:1.45}
+.inp.code{height:140px;padding:10px;font-family:var(--f-mono);font-size:12px;line-height:1.4}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--dock-h) + 16px + env(safe-area-inset-bottom,0px));z-index:30;
+  background:var(--fg);color:var(--bg);border-radius:12px;padding:10px 14px;font-size:14px;display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
+.toast button{border:0;background:transparent;color:var(--accent);font-weight:800;padding:4px 0;filter:brightness(1.3)}
+@media (max-width:420px){.stat{padding:7px 8px}.stat b{font-size:18px}.stat span{font-size:10px}.brand h1{font-size:26px}}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}}
+</style>
+</head>
+<body>
+
+<!-- Einrichtung -->
+<section id="setup" class="setup" hidden>
+  <h1>Kühlschrank</h1>
+  <p>Einmal verbinden, dann sieht jeder im Haushalt denselben Bestand. Wurdest du eingeladen, öffne einfach den Einladungslink.</p>
+  <details class="card help">
+    <summary>Noch keine Datenbank? So legst du sie an</summary>
+    <ol class="steps">
+      <li>Tippe auf <b>Skript-Code kopieren</b>.</li>
+      <li>Öffne in Safari <b>script.google.com</b> und melde dich mit deinem Google-Konto an. Tippe auf <b>aA</b> &gt; <b>Desktop-Website anfordern</b>.</li>
+      <li>Tippe auf <b>Neues Projekt</b>, markiere den vorhandenen Text, lösche ihn und füge den kopierten Code ein. Speichern (Disketten-Symbol).</li>
+      <li><b>Bereitstellen</b> &gt; <b>Neue Bereitstellung</b> &gt; Zahnrad &gt; <b>Web-App</b>. Ausführen als <b>Ich</b>, Zugriff <b>Jeder</b>, dann <b>Bereitstellen</b>.</li>
+      <li>Zugriff autorisieren. Bei „Google hat diese App nicht überprüft“: <b>Erweitert</b> &gt; <b>Zu … wechseln</b> &gt; <b>Zulassen</b>.</li>
+      <li>Die Web-App-URL kopieren und hier unten einfügen. Die PIN denkst du dir jetzt aus.</li>
+    </ol>
+    <button class="btn" id="cCopyGs" type="button">Skript-Code kopieren</button>
+    <textarea class="inp code" id="cGsText" readonly hidden aria-label="Skript-Code"></textarea>
+  </details>
+  <div class="card">
+    <label class="f">Web-App-Adresse (endet auf /exec)<input class="inp" id="cUrl" inputmode="url" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec"></label>
+    <label class="f">PIN (beim ersten Mal frei wählen, mind. 4 Ziffern)<input class="inp" id="cPin" inputmode="numeric" autocomplete="off" placeholder="z. B. 2468"></label>
+    <label class="f">Dein Name<input class="inp" id="cName" autocomplete="given-name" placeholder="z. B. Jonas"></label>
+    <p class="err" id="cErr" hidden></p>
+    <button class="btn primary" id="cGo" type="button">Verbinden</button>
+  </div>
+  <button class="btn" id="cDemo" type="button">Erst mal ausprobieren, ohne zu speichern</button>
+</section>
+
+<!-- Name nach Einladungslink -->
+<section id="nameAsk" class="setup" hidden>
+  <h1>Willkommen</h1>
+  <p>Du wurdest zum gemeinsamen Kühlschrank eingeladen. Wie sollen die anderen dich im Verlauf sehen?</p>
+  <div class="card">
+    <label class="f">Dein Name<input class="inp" id="nName" autocomplete="given-name" placeholder="z. B. Lea"></label>
+    <button class="btn primary" id="nGo" type="button">Los geht’s</button>
+  </div>
+</section>
+
+<div id="app" class="wrap" hidden>
+  <header class="top">
+    <div class="brand"><h1>Kühlschrank</h1><button class="who" id="who" type="button"><span class="dot" id="dot"></span><span id="whoName"></span></button></div>
+    <div class="stats" aria-live="polite">
+      <div class="stat"><b id="sBottles">–</b><span>Flaschen</span></div>
+      <div class="stat"><b id="sKinds">–</b><span>Sorten</span></div>
+      <div class="stat" id="sLowBox"><b id="sLow">–</b><span>Knapp</span></div>
+      <div class="stat"><b id="sPfand">–</b><span>Pfand</span></div>
+    </div>
+    <div class="tools">
+      <input id="q" class="search" type="search" placeholder="Getränk suchen" aria-label="Getränk suchen">
+      <button class="iconbtn" id="manualAdd" type="button">+ Ohne Barcode</button>
+    </div>
+    <div class="chips" id="cats" role="toolbar" aria-label="Kategorie filtern"></div>
+  </header>
+  <div id="notice"></div>
+  <main id="grid" class="grid"></main>
+  <div id="empty" class="emptystate" hidden>
+    <h2>Der Kühlschrank ist noch leer</h2>
+    <p>Tippe unten auf <b>Einkauf</b> und halte die Kamera auf den Barcode einer Flasche. Name und Bild kommen automatisch aus Open Food Facts.</p>
+  </div>
+  <section class="log" id="logBox" hidden><h2>Zuletzt geändert</h2><ol id="log"></ol></section>
+</div>
+
+<nav class="dock" id="dock" aria-label="Scannen" hidden>
+  <div class="in">
+    <button class="big add" id="scanAdd" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M8 8v8M11 8v8M14 8v8M17 8v8"/></svg>Einkauf</button>
+    <button class="big take" id="scanTake" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M8 12h8"/></svg>Entnehmen</button>
+  </div>
+</nav>
+
+<!-- Live-Scanner -->
+<div class="scan" id="scan" hidden>
+  <video id="video" playsinline muted autoplay></video>
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Modus">
+      <button type="button" class="a" data-mode="add" aria-pressed="true">+ Einkauf</button>
+      <button type="button" class="t" data-mode="take" aria-pressed="false">− Entnehmen</button>
+    </div>
+    <button class="xbtn" id="scanClose" type="button" aria-label="Scanner schließen">✕</button>
+  </div>
+  <div class="frame" id="frame"></div>
+  <div class="foot">
+    <div id="scanResult"></div>
+    <p class="hint2" id="scanHint">Barcode in den Rahmen halten. Mehrere Flaschen nacheinander scannen geht auch.</p>
+    <button class="link" id="typeEan" type="button">Nummer eintippen</button>
+  </div>
+</div>
+
+<div id="layer"></div>
+
+<script type="text/plain" id="gsCode">/**
+ * Kühlschrank-Bestand – Datenbank in einer Google-Tabelle
+ *
+ * Einrichtung (nichts an diesem Code ändern):
+ * 1. script.google.com > Neues Projekt, alles dort löschen, diesen Code einfügen, speichern.
+ * 2. Bereitstellen > Neue Bereitstellung > Typ "Web-App"
+ *    - Ausführen als: Ich
+ *    - Zugriff: Jeder
+ * 3. Die Web-App-URL (endet auf /exec) in die App eintragen. Die PIN, die du dort beim
+ *    ersten Verbinden eingibst, wird gespeichert und gilt ab dann für alle.
+ *
+ * Die Tabelle "Kühlschrank-Bestand" legt das Skript beim ersten Verbinden selbst in
+ * deinem Google Drive an.
+ * PIN ändern oder vergessen: Projekteinstellungen (Zahnrad) > Skripteigenschaften > PIN.
+ */
+
+const STOCK = 'Bestand';
+const LOG = 'Verlauf';
+const COLS = ['ean', 'name', 'marke', 'menge', 'kategorie', 'pfand', 'anzahl', 'min', 'bild', 'geaendert'];
+const LOG_COLS = ['zeit', 'ean', 'name', 'delta', 'wer'];
+const MAX_LOG = 500;
+
+function doGet(e) {
+  return handle_((e && e.parameter) || {});
+}
+
+function doPost(e) {
+  let body = {};
+  try { body = JSON.parse(e.postData.contents); } catch (err) {}
+  return handle_(body);
+}
+
+function handle_(p) {
+  try {
+    const props = PropertiesService.getScriptProperties();
+    const given = String(p.pin == null ? '' : p.pin).trim();
+    let pin = props.getProperty('PIN');
+    if (!pin) {
+      // Erstes Verbinden: die eingegebene PIN wird zur PIN dieses Haushalts.
+      if (given.length < 4) return out_({ ok: false, error: 'pin_kurz' });
+      const lock = LockService.getScriptLock();
+      lock.waitLock(15000);
+      try {
+        pin = props.getProperty('PIN');
+        if (!pin) { props.setProperty('PIN', given); pin = given; ss_(); }
+      } finally {
+        lock.releaseLock();
+      }
+    }
+    if (given !== pin) return out_({ ok: false, error: 'pin' });
+    const action = p.action || 'list';
+    if (action === 'list') return out_(Object.assign({ ok: true }, readAll_()));
+
+    const lock = LockService.getScriptLock();
+    lock.waitLock(15000);
+    try {
+      if (action === 'adjust') return out_({ ok: true, product: adjust_(String(p.ean), Number(p.delta) || 0, p.wer) });
+      if (action === 'upsert') return out_({ ok: true, product: upsert_(p.product || {}, p.wer) });
+      if (action === 'delete') { delete_(String(p.ean)); return out_({ ok: true }); }
+    } finally {
+      lock.releaseLock();
+    }
+    return out_({ ok: false, error: 'unbekannte Aktion' });
+  } catch (err) {
+    return out_({ ok: false, error: String((err && err.message) || err) });
+  }
+}
+
+function out_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+let SS_CACHE = null;
+function ss_() {
+  if (SS_CACHE) return SS_CACHE;
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return (SS_CACHE = active); // Skript hängt an einer Tabelle
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SHEET_ID');
+  if (id) {
+    try { return (SS_CACHE = SpreadsheetApp.openById(id)); } catch (err) {}
+  }
+  const ss = SpreadsheetApp.create('Kühlschrank-Bestand');
+  ss.getSheets()[0].setName(STOCK);
+  props.setProperty('SHEET_ID', ss.getId());
+  return (SS_CACHE = ss);
+}
+
+function sheet_(name, headers) {
+  const ss = ss_();
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
+  if (sh.getLastRow() === 0) {
+    sh.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.getRange('A:A').setNumberFormat('@'); // Barcodes als Text, sonst wird 4001… zu 4,00E+12
+    if (name === STOCK) sh.getRange('B:B').setNumberFormat('@');
+  }
+  return sh;
+}
+
+function toObj_(row) {
+  const o = {};
+  COLS.forEach((c, i) => { o[c] = row[i]; });
+  o.ean = String(o.ean);
+  o.name = String(o.name || '');
+  o.marke = String(o.marke || '');
+  o.menge = String(o.menge || '');
+  o.kategorie = String(o.kategorie || 'Sonstiges');
+  o.bild = String(o.bild || '');
+  o.pfand = Number(o.pfand) || 0;
+  o.anzahl = Number(o.anzahl) || 0;
+  o.min = Number(o.min) || 0;
+  o.geaendert = o.geaendert instanceof Date ? o.geaendert.getTime() : Number(o.geaendert) || 0;
+  return o;
+}
+
+function readAll_() {
+  const sh = sheet_(STOCK, COLS);
+  const rows = sh.getLastRow() > 1 ? sh.getRange(2, 1, sh.getLastRow() - 1, COLS.length).getValues() : [];
+  const products = rows.filter(r => String(r[0]) !== '').map(toObj_);
+
+  const lg = sheet_(LOG, LOG_COLS);
+  const n = Math.min(30, Math.max(0, lg.getLastRow() - 1));
+  const logRows = n ? lg.getRange(lg.getLastRow() - n + 1, 1, n, LOG_COLS.length).getValues() : [];
+  const log = logRows.reverse().map(r => ({
+    zeit: r[0] instanceof Date ? r[0].getTime() : Number(r[0]) || 0,
+    ean: String(r[1]), name: String(r[2]), delta: Number(r[3]) || 0, wer: String(r[4] || '')
+  }));
+  return { products: products, log: log, zeit: Date.now() };
+}
+
+function findRow_(sh, ean) {
+  const last = sh.getLastRow();
+  if (last < 2) return -1;
+  const ids = sh.getRange(2, 1, last - 1, 1).getValues();
+  for (let i = 0; i < ids.length; i++) if (String(ids[i][0]) === ean) return i + 2;
+  return -1;
+}
+
+function writeLog_(ean, name, delta, wer) {
+  if (!delta) return;
+  const lg = sheet_(LOG, LOG_COLS);
+  lg.appendRow([new Date(), ean, name, delta, String(wer || '').slice(0, 40)]);
+  const extra = lg.getLastRow() - 1 - MAX_LOG;
+  if (extra > 0) lg.deleteRows(2, extra);
+}
+
+function adjust_(ean, delta, wer) {
+  const sh = sheet_(STOCK, COLS);
+  const r = findRow_(sh, ean);
+  if (r < 0) throw new Error('Barcode nicht im Bestand');
+  const row = sh.getRange(r, 1, 1, COLS.length).getValues()[0];
+  const p = toObj_(row);
+  const neu = Math.max(0, p.anzahl + delta);
+  const real = neu - p.anzahl;
+  p.anzahl = neu;
+  p.geaendert = Date.now();
+  sh.getRange(r, COLS.indexOf('anzahl') + 1).setValue(neu);
+  sh.getRange(r, COLS.indexOf('geaendert') + 1).setValue(new Date(p.geaendert));
+  writeLog_(ean, p.name, real, wer);
+  return p;
+}
+
+function upsert_(p, wer) {
+  const sh = sheet_(STOCK, COLS);
+  const ean = String(p.ean || '').trim();
+  if (!ean) throw new Error('ean fehlt');
+  const r = findRow_(sh, ean);
+  const before = r > 0 ? toObj_(sh.getRange(r, 1, 1, COLS.length).getValues()[0]).anzahl : 0;
+  const o = {
+    ean: ean,
+    name: String(p.name || '').slice(0, 120),
+    marke: String(p.marke || '').slice(0, 80),
+    menge: String(p.menge || '').slice(0, 20),
+    kategorie: String(p.kategorie || 'Sonstiges').slice(0, 30),
+    pfand: Number(p.pfand) || 0,
+    anzahl: Math.max(0, Math.round(Number(p.anzahl) || 0)),
+    min: Math.max(0, Math.round(Number(p.min) || 0)),
+    bild: /^https:\/\//.test(String(p.bild || '')) ? String(p.bild).slice(0, 500) : '',
+    geaendert: Date.now()
+  };
+  const values = COLS.map(c => c === 'geaendert' ? new Date(o.geaendert) : o[c]);
+  if (r > 0) sh.getRange(r, 1, 1, COLS.length).setValues([values]);
+  else sh.appendRow(values);
+  writeLog_(ean, o.name, o.anzahl - before, wer);
+  return o;
+}
+
+function delete_(ean) {
+  const sh = sheet_(STOCK, COLS);
+  const r = findRow_(sh, ean);
+  if (r > 0) sh.deleteRow(r);
+}
+
+/** Optional: einmal im Editor ausführen, um die Tabellenblätter sofort anzulegen. */
+function einrichten() {
+  sheet_(STOCK, COLS);
+  sheet_(LOG, LOG_COLS);
+}
+</script>
+<script src="https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js"></script>
+<script>
+(function(){
+"use strict";
+const CATS=["Wasser","Softdrink","Saft","Bier","Wein & Sekt","Sonstiges"];
+const HUE={"Wasser":200,"Softdrink":12,"Saft":38,"Bier":45,"Wein & Sekt":330,"Sonstiges":160};
+const SIZES=["0,2 l","0,33 l","0,5 l","0,75 l","1,0 l","1,5 l"];
+const PFAND=[[0,"kein"],[0.08,"0,08 €","Mehrweg Bier"],[0.15,"0,15 €","Mehrweg"],[0.25,"0,25 €","Einweg/Dose"]];
+const PACKS=[[1,""],[6,"Sixpack"],[12,""],[20,"Kasten"],[24,"Kasten"]];
+const CFG_KEY="kuehlschrank.cfg", DEMO_KEY="kuehlschrank.demo";
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur=n=>n.toLocaleString("de-DE",{style:"currency",currency:"EUR"});
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(_){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}},del(k){try{localStorage.removeItem(k)}catch(_){}}};
+
+let cfg=store.get(CFG_KEY);           // {url,pin,name} or {demo:true,name}
+let products=new Map(), log=[], filter="Alle", query="", online=true;
+
+/* ================= Datenzugriff ================= */
+const remote={
+  async call(params,post){
+    let r;
+    if(post){r=await fetch(cfg.url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({...params,pin:cfg.pin,wer:cfg.name})})}
+    else{const u=new URL(cfg.url);u.searchParams.set("action","list");u.searchParams.set("pin",cfg.pin);u.searchParams.set("t",Date.now());r=await fetch(u.toString())}
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    const j=await r.json();
+    if(!j.ok)throw Object.assign(new Error(j.error||"Fehler"),{code:j.error});
+    return j;
+  },
+  list(){return this.call({},false)},
+  adjust(ean,delta){return this.call({action:"adjust",ean,delta},true)},
+  upsert(product){return this.call({action:"upsert",product},true)},
+  del(ean){return this.call({action:"delete",ean},true)}
+};
+const demo={
+  data(){return store.get(DEMO_KEY)||{products:[
+    {ean:"bsp-1",name:"Mineralwasser Classic",marke:"Beispiel",menge:"0,75 l",kategorie:"Wasser",pfand:0.15,anzahl:6,min:3,bild:""},
+    {ean:"bsp-2",name:"Cola Zero",marke:"Beispiel",menge:"0,33 l",kategorie:"Softdrink",pfand:0.25,anzahl:1,min:4,bild:""},
+    {ean:"bsp-3",name:"Helles",marke:"Beispiel",menge:"0,5 l",kategorie:"Bier",pfand:0.08,anzahl:11,min:6,bild:""}],log:[]}},
+  save(d){store.set(DEMO_KEY,d)},
+  async list(){return {...this.data(),ok:true}},
+  async adjust(ean,delta){const d=this.data();const p=d.products.find(x=>x.ean===ean);if(!p)throw new Error("Barcode nicht im Bestand");
+    const n=Math.max(0,p.anzahl+delta);const real=n-p.anzahl;p.anzahl=n;if(real)d.log.unshift({zeit:Date.now(),ean,name:p.name,delta:real,wer:cfg.name});d.log=d.log.slice(0,30);this.save(d);return {product:p}},
+  async upsert(product){const d=this.data();const i=d.products.findIndex(x=>x.ean===product.ean);const before=i>=0?d.products[i].anzahl:0;
+    if(i>=0)d.products[i]=product;else d.products.push(product);const delta=product.anzahl-before;if(delta)d.log.unshift({zeit:Date.now(),ean:product.ean,name:product.name,delta,wer:cfg.name});this.save(d);return {product}},
+  async del(ean){const d=this.data();d.products=d.products.filter(x=>x.ean!==ean);this.save(d);return {}}
+};
+const api=()=>cfg&&cfg.demo?demo:remote;
+
+let pending=0;
+async function refresh(){
+  if(pending)return;
+  try{const j=await api().list();products=new Map(j.products.map(p=>[p.ean,p]));log=j.log||[];setOnline(true);render()}
+  catch(e){if(e.code==="pin"){toast("Die PIN stimmt nicht mehr. Bitte neu verbinden.");}setOnline(false)}
+}
+function setOnline(v){online=v;$("#dot").classList.toggle("off",!v);
+  $("#notice").innerHTML=v?(cfg.demo?`<div class="notice"><span>Probemodus: Alles bleibt nur auf diesem Gerät.</span><button type="button" id="toSetup">Jetzt verbinden</button></div>`:"")
+    :`<div class="notice bad"><span>Keine Verbindung zum Bestand. Änderungen werden nicht gespeichert.</span><button type="button" id="retry">Nochmal</button></div>`}
+async function write(fn,rollback){
+  pending++;
+  try{const j=await fn();if(j&&j.product)products.set(j.product.ean,j.product);setOnline(true);return j}
+  catch(e){if(rollback)rollback();toast(e.message==="Barcode nicht im Bestand"?"Das Getränk gibt es nicht mehr im Bestand.":"Speichern hat nicht geklappt. Prüfe die Verbindung.");setOnline(false);throw e}
+  finally{pending--;render()}
+}
+async function changeQty(ean,delta,opts={}){
+  const p=products.get(ean);if(!p)return null;
+  const old=p.anzahl;const n=Math.max(0,old+delta);if(n===old)return p;
+  p.anzahl=n;render();
+  try{const j=await write(()=>api().adjust(ean,delta),()=>{p.anzahl=old});
+    if(!opts.silent)addLocalLog(p,n-old);
+    return j.product}catch(_){return null}
+}
+function addLocalLog(p,delta){log.unshift({zeit:Date.now(),ean:p.ean,name:p.name,delta,wer:cfg.name});log=log.slice(0,30);renderLog()}
+
+/* ================= Open Food Facts ================= */
+async function lookupOFF(ean){
+  if(!/^\d{8,14}$/.test(ean))return null;
+  const fields="product_name,product_name_de,generic_name_de,brands,quantity,image_front_small_url,image_front_url,image_url,categories_tags";
+  const ctrl=new AbortController();const t=setTimeout(()=>ctrl.abort(),8000);
+  try{
+    const r=await fetch(`https://world.openfoodfacts.org/api/v2/product/${ean}.json?fields=${fields}`,{signal:ctrl.signal});
+    if(!r.ok)return null;const j=await r.json();
+    if(j.status!==1||!j.product)return null;const p=j.product;
+    const name=(p.product_name_de||p.product_name||p.generic_name_de||"").trim();
+    return {name,marke:(p.brands||"").split(",")[0].trim(),menge:normSize(p.quantity||""),
+      bild:p.image_front_small_url||p.image_front_url||p.image_url||"",kategorie:guessCat(p.categories_tags||[]),pfand:guessPfand(p.categories_tags||[],p.quantity||"")};
+  }catch(_){return null}finally{clearTimeout(t)}
+}
+function normSize(q){
+  const m=String(q).replace(",",".").match(/(\d+(?:\.\d+)?)\s*(ml|cl|l|liter)\b/i);if(!m)return String(q).trim().slice(0,20);
+  let l=parseFloat(m[1]);const u=m[2].toLowerCase();if(u==="ml")l/=1000;else if(u==="cl")l/=100;
+  const s=l>=1?l.toFixed(1):String(Math.round(l*100)/100);return s.replace(".",",")+" l";
+}
+function guessCat(tags){const t=tags.join(" ");
+  if(/beers|biere/.test(t))return "Bier";
+  if(/wines|sparkling-wines|champagnes|proseccos|sekt/.test(t))return "Wein & Sekt";
+  if(/waters|eaux/.test(t))return "Wasser";
+  if(/juices|nectars|jus|spritzer|schorle/.test(t))return "Saft";
+  if(/sodas|colas|carbonated|soft-drinks|energy-drinks|iced-teas|lemonade|limonaden/.test(t))return "Softdrink";
+  return "Sonstiges"}
+function guessPfand(tags,q){const t=tags.join(" ");if(/wines|spirits/.test(t))return 0;if(/beers/.test(t)&&/0[.,]5|500/.test(q))return 0.08;return 0.25}
+
+/* ================= Darstellung ================= */
+function bottle(cat){const h=HUE[cat]??160;
+  return `<svg viewBox="0 0 40 90" aria-hidden="true"><path d="M15 2h10v14c0 4 8 8 8 18v50a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4V34c0-10 8-14 8-18z" fill="hsl(${h} 45% 55% / .35)" stroke="hsl(${h} 40% 45%)" stroke-width="2"/><rect x="7" y="44" width="26" height="22" fill="hsl(${h} 45% 50% / .55)"/></svg>`}
+function img(p){return p.bild?`<img src="${esc(p.bild)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(document.createRange().createContextualFragment(window.__bottle('${esc(p.kategorie)}')))">`:bottle(p.kategorie)}
+window.__bottle=bottle;
+
+function render(){
+  const all=[...products.values()];
+  $("#sBottles").textContent=all.reduce((a,p)=>a+p.anzahl,0);
+  $("#sKinds").textContent=all.filter(p=>p.anzahl>0).length;
+  const low=all.filter(p=>p.min>0&&p.anzahl<=p.min).length;
+  $("#sLow").textContent=low;$("#sLowBox").classList.toggle("warn",low>0);
+  $("#sPfand").textContent=eur(all.reduce((a,p)=>a+p.anzahl*(p.pfand||0),0));
+  const present=new Set(all.map(p=>p.kategorie));const cats=["Alle",...CATS.filter(c=>present.has(c))];if(!cats.includes(filter))filter="Alle";
+  $("#cats").innerHTML=cats.map(c=>`<button class="chip" type="button" data-cat="${esc(c)}" aria-pressed="${c===filter}">${esc(c)}</button>`).join("");
+  const q=query.trim().toLowerCase();
+  const list=all.filter(p=>(filter==="Alle"||p.kategorie===filter)&&(!q||`${p.name} ${p.marke} ${p.ean}`.toLowerCase().includes(q)))
+    .sort((a,b)=>((b.anzahl>0)-(a.anzahl>0))||CATS.indexOf(a.kategorie)-CATS.indexOf(b.kategorie)||a.name.localeCompare(b.name,"de"));
+  $("#grid").innerHTML=list.map(p=>{const isLow=p.min>0&&p.anzahl<=p.min;
+    return `<article class="tile${p.anzahl>0?"":" empty"}" data-ean="${esc(p.ean)}">
+      <button class="pic${p.bild?"":" ph"}" type="button" data-act="edit" aria-label="${esc(p.name)} bearbeiten">${img(p)}${isLow?`<span class="badge">${p.anzahl===0?"Leer":"Knapp"}</span>`:""}</button>
+      <div class="info"><div class="name">${esc(p.name)}</div><div class="meta">${esc([p.menge,p.marke].filter(Boolean).join(" · ")||p.kategorie)}</div></div>
+      <div class="qtyrow"><button type="button" data-act="minus" aria-label="Eins entnehmen">−</button><div class="qty">${p.anzahl}<small>im Fach</small></div><button type="button" class="plus" data-act="plus" aria-label="Eins dazu">+</button></div>
+    </article>`}).join("");
+  $("#empty").hidden=all.length>0;
+  renderLog();
+}
+function ago(t){const m=Math.round((Date.now()-t)/60000);if(m<1)return"gerade";if(m<60)return`vor ${m} Min.`;const h=Math.round(m/60);if(h<24)return`vor ${h} Std.`;return new Date(t).toLocaleDateString("de-DE",{day:"numeric",month:"short"})}
+function renderLog(){$("#logBox").hidden=!log.length;
+  $("#log").innerHTML=log.slice(0,12).map(e=>`<li><span class="d ${e.delta>0?"in":"out"}">${e.delta>0?"+":"−"}${Math.abs(e.delta)}</span><span class="n">${esc(e.name)}</span><span class="w">${esc(e.wer===cfg.name?"Du":e.wer)}${e.wer?" · ":""}${ago(e.zeit)}</span></li>`).join("")}
+
+/* ================= Toast & Sheets ================= */
+let toastTimer;
+function toast(msg,action,fn){clearTimeout(toastTimer);const old=$(".toast");if(old)old.remove();
+  const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");
+  t.innerHTML=`<span>${esc(msg)}</span>${action?`<button type="button">${esc(action)}</button>`:""}`;
+  if(action)t.querySelector("button").onclick=()=>{t.remove();fn()};document.body.appendChild(t);toastTimer=setTimeout(()=>t.remove(),action?6000:3200)}
+let onSheetClose=null;
+function sheet(html){$("#layer").innerHTML=`<div class="scrim"><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`;
+  const s=$("#layer .scrim");s.addEventListener("click",e=>{if(e.target===s)close()});return s.querySelector(".sheet")}
+function close(){$("#layer").innerHTML="";const f=onSheetClose;onSheetClose=null;if(f)f()}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#layer").innerHTML)close()});
+function optGroup(name,items,cur){return `<div class="opts" data-group="${name}">${items.map(([v,l,s])=>`<button type="button" class="opt" data-v="${esc(v)}" aria-pressed="${String(v)===String(cur)}">${esc(l)}${s?`<small>${esc(s)}</small>`:""}</button>`).join("")}</div>`}
+function wireGroups(root,st){root.querySelectorAll(".opts").forEach(g=>g.addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b)return;
+  const k=g.dataset.group;let v=b.dataset.v;if(k==="pfand"||k==="pack")v=Number(v);st[k]=v;g.querySelectorAll(".opt").forEach(o=>o.setAttribute("aria-pressed",o===b));if(st.onchange)st.onchange(k,v)}))}
+
+/* Produktformular: neu oder bearbeiten */
+function productForm(p,isNew,afterClose){
+  onSheetClose=afterClose||null;
+  const st={kategorie:p.kategorie||"Softdrink",menge:p.menge||"",pfand:p.pfand??0.25,armed:false};
+  const s=sheet(`
+    <div class="head"><div class="thumb">${img(p)}</div>
+      <div><h3>${isNew?"Neues Getränk":"Getränk bearbeiten"}</h3><div class="ean">${p.ean&&!p.ean.startsWith("m-")?"EAN "+esc(p.ean):"ohne Barcode"}</div>
+      ${isNew?`<div class="src">${p.fromOFF?"Daten von Open Food Facts, bitte kurz prüfen.":p.ean?"In Open Food Facts nicht gefunden, bitte selbst eintragen.":""}</div>`:""}</div></div>
+    <label class="f">Name<input class="inp" id="fName" value="${esc(p.name||"")}" placeholder="z. B. Apfelschorle naturtrüb" autocomplete="off"></label>
+    <label class="f">Marke<input class="inp" id="fBrand" value="${esc(p.marke||"")}" placeholder="optional" autocomplete="off"></label>
+    <label class="f">Kategorie</label>${optGroup("kategorie",CATS.map(c=>[c,c]),st.kategorie)}
+    <label class="f">Füllmenge<input class="inp" id="fSize" value="${esc(st.menge)}" placeholder="z. B. 0,5 l" autocomplete="off"></label>
+    <div class="opts" id="sizeChips">${SIZES.map(z=>`<button type="button" class="opt" data-size="${z}">${z}</button>`).join("")}</div>
+    <label class="f">Pfand je Flasche</label>${optGroup("pfand",PFAND,st.pfand)}
+    <div class="row2">
+      <label class="f">${isNew?"Anzahl jetzt":"Bestand"}<input class="inp" id="fQty" type="number" min="0" inputmode="numeric" value="${p.anzahl??1}"></label>
+      <label class="f">Warnen ab<input class="inp" id="fMin" type="number" min="0" inputmode="numeric" value="${p.min??2}"></label>
+    </div>
+    <p class="err" id="fErr" hidden></p>
+    <div class="actions">${isNew?`<button type="button" class="btn" id="fCancel">Abbrechen</button>`:`<button type="button" class="btn danger" id="fDel">Löschen</button>`}
+      <button type="button" class="btn primary" id="fSave">${isNew?"Anlegen":"Speichern"}</button></div>`);
+  wireGroups(s,st);
+  s.querySelector("#sizeChips").onclick=e=>{const b=e.target.closest("[data-size]");if(b)s.querySelector("#fSize").value=b.dataset.size};
+  const c=s.querySelector("#fCancel");if(c)c.onclick=close;
+  const d=s.querySelector("#fDel");if(d)d.onclick=async()=>{if(!st.armed){st.armed=true;d.classList.add("armed");d.textContent="Wirklich löschen?";return}
+    const prev=products.get(p.ean);products.delete(p.ean);close();try{await write(()=>api().del(p.ean),()=>products.set(p.ean,prev));toast(`${p.name} gelöscht`)}catch(_){}};
+  s.querySelector("#fSave").onclick=async()=>{
+    const name=s.querySelector("#fName").value.trim();
+    if(!name){const e=s.querySelector("#fErr");e.textContent="Gib dem Getränk einen Namen, damit du es im Bestand wiederfindest.";e.hidden=false;s.querySelector("#fName").focus();return}
+    const ean=p.ean||("m-"+Math.random().toString(36).slice(2,10));
+    const prod={ean,name,marke:s.querySelector("#fBrand").value.trim(),menge:s.querySelector("#fSize").value.trim(),kategorie:st.kategorie,pfand:st.pfand,
+      anzahl:Math.max(0,parseInt(s.querySelector("#fQty").value,10)||0),min:Math.max(0,parseInt(s.querySelector("#fMin").value,10)||0),bild:p.bild||"",geaendert:Date.now()};
+    const before=products.get(ean);products.set(ean,prod);
+    const btn=s.querySelector("#fSave");btn.disabled=true;btn.textContent="Speichert …";
+    try{await write(()=>api().upsert(prod),()=>{if(before)products.set(ean,before);else products.delete(ean)});
+      const delta=prod.anzahl-(before?before.anzahl:0);if(delta)addLocalLog(prod,delta);close();toast(isNew?`${name} angelegt`:"Gespeichert")}
+    catch(_){btn.disabled=false;btn.textContent=isNew?"Anlegen":"Speichern"}
+  };
+}
+
+/* Einkauf eines bekannten Getränks: Menge wählen */
+function purchaseSheet(p,afterClose){
+  onSheetClose=afterClose||null;const st={pack:1};
+  const s=sheet(`<div class="head"><div class="thumb">${img(p)}</div><div><h3>${esc(p.name)}</h3><div class="ean">Im Fach: ${p.anzahl}</div></div></div>
+    <label class="f">Wie viele kommen dazu?</label>${optGroup("pack",PACKS.map(([n,l])=>[n,String(n),l]),1)}
+    <div class="stepper"><button type="button" id="pm" aria-label="Weniger">−</button><output id="pv">1</output><button type="button" id="pp" aria-label="Mehr">+</button></div>
+    <div class="actions"><button type="button" class="btn" id="pc">Abbrechen</button><button type="button" class="btn primary" id="ps">Einbuchen</button></div>`);
+  const upd=()=>{s.querySelector("#pv").textContent=st.pack;s.querySelectorAll('[data-group="pack"] .opt').forEach(o=>o.setAttribute("aria-pressed",Number(o.dataset.v)===st.pack))};
+  st.onchange=upd;wireGroups(s,st);
+  s.querySelector("#pm").onclick=()=>{st.pack=Math.max(1,st.pack-1);upd()};
+  s.querySelector("#pp").onclick=()=>{st.pack++;upd()};
+  s.querySelector("#pc").onclick=close;
+  s.querySelector("#ps").onclick=async()=>{const n=st.pack;close();const r=await changeQty(p.ean,n);if(r)flash(p,`+${n} eingebucht · jetzt ${r.anzahl}`)};
+}
+
+/* ================= Live-Scanner ================= */
+let reader=null, mode="add", paused=false, lastCode="", lastAt=0, audio=null, scanning=false;
+function beep(ok){try{if(!audio)return;const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=ok?1320:440;g.gain.value=.08;o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+(ok?.09:.2))}catch(_){}}
+function setMode(m){mode=m;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===m))}
+async function openScanner(m){
+  setMode(m);$("#scan").hidden=false;$("#scanResult").innerHTML="";paused=false;
+  try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==="suspended")audio.resume()}catch(_){}
+  if(!window.ZXing){scanError("Der Scanner konnte nicht geladen werden. Prüfe die Internetverbindung.");return}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){scanError("Dieser Browser erlaubt keinen Kamerazugriff. Öffne die Seite in Safari über https.");return}
+  const Z=window.ZXing;const hints=new Map();
+  hints.set(Z.DecodeHintType.POSSIBLE_FORMATS,[Z.BarcodeFormat.EAN_13,Z.BarcodeFormat.EAN_8,Z.BarcodeFormat.UPC_A,Z.BarcodeFormat.UPC_E]);
+  reader=new Z.BrowserMultiFormatReader(hints,150);
+  scanning=true;
+  try{
+    await reader.decodeFromConstraints({audio:false,video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}}},$("#video"),(res)=>{
+      if(!res||paused||!scanning)return;const code=res.getText();const now=Date.now();
+      if(code===lastCode&&now-lastAt<2500)return;lastCode=code;lastAt=now;onCode(code)});
+  }catch(e){scanError(e&&e.name==="NotAllowedError"?"Kein Kamerazugriff. Erlaube die Kamera für diese Seite (Safari: aA-Symbol > Website-Einstellungen > Kamera).":"Die Kamera ließ sich nicht starten. Schließe andere Apps, die sie nutzen, und versuche es nochmal.")}
+}
+function scanError(msg){$("#scanResult").innerHTML=`<div class="err2">${esc(msg)}</div>`}
+function closeScanner(){scanning=false;try{reader&&reader.reset()}catch(_){}reader=null;$("#scan").hidden=true;render()}
+function flash(p,text,action,fn){
+  const el=$("#scanResult");if($("#scan").hidden){toast(`${p.name}: ${text}`,action,fn);return}
+  el.innerHTML=`<div class="result">${p.bild?`<img src="${esc(p.bild)}" alt="" referrerpolicy="no-referrer">`:`<div class="ph"></div>`}<div class="t"><b>${esc(p.name)}</b>${esc(text)}</div>${action?`<button type="button">${esc(action)}</button>`:""}</div>`;
+  $("#frame").classList.add("hit");setTimeout(()=>$("#frame").classList.remove("hit"),500);
+  if(action)el.querySelector("button").onclick=fn;
+}
+function resume(){paused=false;lastAt=Date.now()}
+async function onCode(code){
+  const p=products.get(code);
+  if(mode==="take"){
+    if(!p){beep(false);flash({name:"Unbekannter Barcode",bild:""},code+" ist noch nicht im Bestand.","Anlegen",()=>newFromCode(code));return}
+    if(p.anzahl===0){beep(false);flash(p,"ist schon leer.");return}
+    beep(true);const r=await changeQty(p.ean,-1);
+    if(r)flash(p,`−1 · noch ${r.anzahl}`,"Rückgängig",async()=>{const u=await changeQty(p.ean,1,{silent:true});if(u){log.shift();renderLog();flash(p,`zurückgenommen · ${u.anzahl}`)}});
+    return}
+  beep(true);
+  if(p){paused=true;purchaseSheet(p,resume);return}
+  newFromCode(code);
+}
+async function newFromCode(code){
+  paused=true;flash({name:"Suche Produkt …",bild:""},`EAN ${code} bei Open Food Facts`);
+  const off=await lookupOFF(code);
+  productForm(off?{...off,ean:code,anzahl:1,min:2,fromOFF:!!off.name}:{ean:code,anzahl:1,min:2},true,()=>{$("#scanResult").innerHTML="";resume()});
+}
+function typeEan(){
+  paused=true;onSheetClose=resume;
+  const s=sheet(`<h3>Barcode eintippen</h3><p class="hint">Die Ziffern stehen unter dem Strichcode, meist 13 Stück.</p>
+    <input class="inp" id="tEan" inputmode="numeric" autocomplete="off" placeholder="z. B. 4…">
+    <div class="actions"><button type="button" class="btn" id="tC">Abbrechen</button><button type="button" class="btn primary" id="tOk">Weiter</button></div>`);
+  const i=s.querySelector("#tEan");setTimeout(()=>i.focus(),50);
+  s.querySelector("#tC").onclick=close;
+  s.querySelector("#tOk").onclick=()=>{const v=i.value.replace(/\D/g,"");if(v.length<8){i.focus();return}onSheetClose=null;close();onCode(v)};
+}
+
+/* ================= Einstellungen & Einladung ================= */
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+const appBase=()=>location.origin+location.pathname;
+function inviteLink(){return appBase()+"#k="+enc({u:cfg.url,p:cfg.pin})}
+/* The connection lives in the address too: an icon on the iPhone home screen keeps its own storage, but it keeps the address. */
+function keepInAddress(){try{if(cfg&&!cfg.demo)history.replaceState(null,"",location.pathname+location.search+"#k="+enc({u:cfg.url,p:cfg.pin,n:cfg.name||""}));
+  else history.replaceState(null,"",location.pathname+location.search)}catch(_){}}
+function settings(){
+  const link=cfg.demo?"":inviteLink();
+  const s=sheet(`<h3>Einstellungen</h3>
+    <label class="f">Dein Name<input class="inp" id="sName" value="${esc(cfg.name||"")}" autocomplete="given-name"></label>
+    ${cfg.demo?`<p class="hint">Du bist im Probemodus. Verbinde die App mit deiner Google-Tabelle, um den Bestand zu teilen.</p>`:`
+    <label class="f">Einladungslink für den Haushalt<input class="inp" id="sLink" value="${esc(link)}" readonly></label>
+    <p class="hint">Wer diesen Link öffnet, ist sofort verbunden. Teile ihn nur im Haushalt, er enthält die PIN.</p>
+    <button type="button" class="btn" id="sCopy">Link kopieren</button>
+    <label class="f">App für einen anderen Haushalt<input class="inp" id="sBase" value="${esc(appBase())}" readonly></label>
+    <p class="hint">Dieser Link enthält nichts von euch. Ein anderer Haushalt legt damit seine eigene Datenbank an.</p>`}
+    <div class="actions"><button type="button" class="btn danger" id="sOut">${cfg.demo?"Verbinden":"Trennen"}</button><button type="button" class="btn primary" id="sOk">Fertig</button></div>`);
+  const cp=s.querySelector("#sCopy");if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText(link);cp.textContent="Kopiert"}catch(_){const i=s.querySelector("#sLink");i.focus();i.select();cp.textContent="Markiert, jetzt kopieren"}};
+  s.querySelector("#sOk").onclick=()=>{const n=s.querySelector("#sName").value.trim();if(n){cfg.name=n;store.set(CFG_KEY,cfg);$("#whoName").textContent=n;keepInAddress()}close()};
+  s.querySelector("#sOut").onclick=()=>{close();store.del(CFG_KEY);cfg=null;keepInAddress();showSetup()};
+}
+function showSetup(){$("#app").hidden=true;$("#dock").hidden=true;$("#nameAsk").hidden=true;$("#setup").hidden=false}
+function showApp(){$("#setup").hidden=true;$("#nameAsk").hidden=true;$("#app").hidden=false;$("#dock").hidden=false;$("#whoName").textContent=cfg.name||"Ich";keepInAddress();setOnline(true);refresh()}
+$("#cGo").onclick=async()=>{
+  const url=$("#cUrl").value.trim(),pin=$("#cPin").value.trim(),name=$("#cName").value.trim()||"Ich",err=$("#cErr");err.hidden=true;
+  if(!/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec/.test(url)){err.textContent="Die Adresse muss mit https://script.google.com beginnen und auf /exec enden.";err.hidden=false;return}
+  if(pin.length<4){err.textContent="Die PIN braucht mindestens 4 Ziffern.";err.hidden=false;return}
+  const b=$("#cGo");b.disabled=true;b.textContent="Verbinde …";
+  cfg={url,pin,name};
+  try{await remote.list();store.set(CFG_KEY,cfg);showApp()}
+  catch(e){cfg=null;err.textContent=e.code==="pin"?"Diese Datenbank hat schon eine andere PIN. Frag die Person, die sie eingerichtet hat.":e.code==="pin_kurz"?"Die PIN braucht mindestens 4 Ziffern.":"Keine Verbindung. Prüfe, ob die Adresse auf /exec endet und die Web-App mit Zugriff „Jeder“ bereitgestellt ist.";err.hidden=false}
+  finally{b.disabled=false;b.textContent="Verbinden"}
+};
+$("#cCopyGs").onclick=async()=>{
+  const code=$("#gsCode").textContent.replace(/<\\\/script/g,"</script").trim();const b=$("#cCopyGs");
+  try{await navigator.clipboard.writeText(code);b.textContent="Kopiert. Jetzt bei Google einfügen."}
+  catch(_){const t=$("#cGsText");t.value=code;t.hidden=false;t.focus();t.select();b.textContent="Text markiert, jetzt kopieren"}
+};
+$("#cDemo").onclick=()=>{cfg={demo:true,name:$("#cName").value.trim()||"Ich"};store.set(CFG_KEY,cfg);showApp()};
+$("#nGo").onclick=()=>{cfg.name=$("#nName").value.trim()||"Jemand";store.set(CFG_KEY,cfg);showApp()};
+
+/* ================= Ereignisse ================= */
+$("#scanAdd").onclick=()=>openScanner("add");
+$("#scanTake").onclick=()=>openScanner("take");
+$("#scanClose").onclick=closeScanner;
+$("#typeEan").onclick=typeEan;
+document.querySelector(".seg").onclick=e=>{const b=e.target.closest("button");if(b){setMode(b.dataset.mode);$("#scanResult").innerHTML=""}};
+$("#manualAdd").onclick=()=>productForm({anzahl:1,min:2},true);
+$("#who").onclick=settings;
+$("#q").addEventListener("input",e=>{query=e.target.value;render()});
+$("#cats").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){filter=b.dataset.cat;render()}});
+$("#notice").addEventListener("click",e=>{if(e.target.id==="retry")refresh();if(e.target.id==="toSetup"){store.del(CFG_KEY);cfg=null;showSetup()}});
+$("#grid").addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const ean=b.closest(".tile").dataset.ean;const p=products.get(ean);if(!p)return;
+  if(b.dataset.act==="plus")changeQty(ean,1);else if(b.dataset.act==="minus")changeQty(ean,-1);else productForm(p,false)});
+setInterval(()=>{if(cfg&&!document.hidden&&$("#scan").hidden&&!$("#layer").innerHTML)refresh()},20000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&cfg)refresh()});
+
+/* ================= Start ================= */
+const m=location.hash.match(/#k=([^&]+)/);
+if(m){try{const o=JSON.parse(decodeURIComponent(escape(atob(m[1]))));if(o.u&&o.p){const prevName=cfg&&!cfg.demo&&cfg.url===o.u?cfg.name:"";cfg={url:o.u,pin:o.p,name:o.n||prevName||""};store.set(CFG_KEY,cfg)}}catch(_){}}
+if(!cfg)showSetup();
+else if(!cfg.name){$("#setup").hidden=true;$("#nameAsk").hidden=false}
+else showApp();
+})();
+</script>
+</body>
+</html>
 
